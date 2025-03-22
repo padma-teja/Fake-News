@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TruthCheck - Verified News</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .logo-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    header img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+    }
+
+    header h1 {
+      font-size: 2rem;
+    }
+
+    header p {
+      margin-top: 10px;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .section {
+      background-color: white;
+      padding: 25px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .section h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .submission-form input[type="url"],
+    .submission-form input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .submission-form button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .submission-form button:hover {
+      background-color: #45a049;
+    }
+
+    .verified-news button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .verified-news button:hover {
+      background-color: #45a049;
+    }
+
+    .verified-news-item {
+      background-color: #f2f2f2;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+    }
+
+    #loading-spinner,
+    #loading-spinner-news {
+      display: none;
+      margin-top: 10px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin-bottom: 8px;
+    }
+
+    .next-button {
+      display: block;
+      margin: 40px auto 0;
+      padding: 12px 30px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .next-button:hover {
+      background-color: #45a049;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo-title">
+      <img src='file:///C:/Users/padma/Downloads/gdg3.webp' alt="Logo">
+      <h1>TruthCheck</h1>
+    </div>
+    <p>Your Trusted Source For Verified News</p>
+  </header>
+
+  <div class="container">
+
+    <section class="section">
+      <h2>About TruthCheck</h2>
+      <p>TruthCheck is a platform committed to fighting misinformation and fake news. We ensure the public receives fact-checked, verified content. Stay informed and confident with credible news updates.</p>
+    </section>
+
+    <section class="section submission-form">
+      <h2>Submit News for Verification</h2>
+      <form id="news-form">
+        <input type="url" id="news-url" placeholder="Enter News Article URL">
+        <input type="text" id="news-title" placeholder="Enter News Title">
+        <button type="submit">Submit</button>
+      </form>
+      <div id="loading-spinner">Submitting...</div>
+    </section>
+
+    <section class="section verified-news">
+      <h2>Verified News Feed</h2>
+      <button id="load-verified-news">Load Verified News</button>
+      <div id="loading-spinner-news">Loading...</div>
+      <div id="verified-news-list">
+        <!-- Verified news displayed here -->
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Key Features</h2>
+      <ul>
+        <li>Submit viral news stories for verification.</li>
+        <li>Access real-time verified updates.</li>
+        <li>Educational resources on spotting fake news.</li>
+        <li>Trusted partnerships with journalists and fact-checkers.</li>
+        <li>Complete transparency and accuracy guaranteed.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Contact Us</h2>
+      <p>Email: xxxxx@gmail.com</p>
+      <p>Phone: +123-456-7890</p>
+    </section>
+
+    <button class="next-button" onclick="goToNextPage()">Next</button>
+
+  </div>
+
+  <footer>
+    &copy; 2025 TruthCheck | All Rights Reserved
+  </footer>
+
+  <script>
+    document.getElementById('news-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const newsUrl = document.getElementById('news-url').value;
+      const newsTitle = document.getElementById('news-title').value;
+
+      if (!newsUrl && !newsTitle) {
+        alert('Please enter either News URL or Title.');
+        return;
+      }
+
+      document.getElementById('loading-spinner').style.display = 'block';
+
+      setTimeout(() => {
+        document.getElementById('loading-spinner').style.display = 'none';
+        alert('News submitted successfully!');
+        document.getElementById('news-form').reset();
+      }, 1500);
+    });
+
+    document.getElementById('load-verified-news').addEventListener('click', function () {
+      document.getElementById('loading-spinner-news').style.display = 'block';
+
+      setTimeout(() => {
+        document.getElementById('loading-spinner-news').style.display = 'none';
+
+        const verifiedNews = [
+          { title: 'WHO confirms COVID-19 vaccine safety', url: 'https://www.example.com/news1' },
+          { title: 'UN releases climate change report', url: 'https://www.example.com/news2' },
+          { title: 'Fact-check: Viral video debunked', url: 'https://www.example.com/news3' }
+        ];
+
+        const newsList = document.getElementById('verified-news-list');
+        newsList.innerHTML = '';
+
+        verifiedNews.forEach(news => {
+          const newsItem = document.createElement('div');
+          newsItem.classList.add('verified-news-item');
+          newsItem.innerHTML = `
+            <h3>${news.title}</h3>
+            <p><a href="${news.url}" target="_blank">${news.url}</a></p>
+          `;
+          newsList.appendChild(newsItem);
+        });
+      }, 1500);
+    });
+
+    function goToNextPage() {
+      window.location.href = "third.html";
+    }
+  </script>
+
+</body>
+
+</html>

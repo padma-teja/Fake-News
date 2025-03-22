@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TruthCheck - Report Page</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0fdf4; /* Light green background */
+            color: #333;
+        }
+
+        header {
+            background-color: #2e7d32; /* Deep green */
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        header img {
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+            margin-right: 20px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-text h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header-text p {
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .report-form input[type="text"],
+        .report-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+        }
+
+        .report-form button {
+            background-color: #2e7d32;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .report-form button:hover {
+            background-color: #1b5e20;
+        }
+
+        .status-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #e8f5e9; /* Soft green */
+            border-left: 6px solid #2e7d32;
+            border-radius: 8px;
+        }
+
+        .status-item h3 {
+            margin-bottom: 5px;
+        }
+
+        #loading-spinner {
+            display: none;
+            text-align: center;
+            font-weight: bold;
+            color: #2e7d32;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+            }
+
+            header img {
+                margin-bottom: 10px;
+            }
+
+            .header-text h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <img src='file:///C:/Users/padma/Downloads/gdg3.webp' alt="Logo" />
+        <div class="header-text">
+            <h1>TruthCheck - Report Page</h1>
+            <p>Submit fake news reports & check their status easily</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- Report Form -->
+        <section class="card report-form">
+            <h2>Submit a Report</h2>
+            <form id="report-form">
+                <label for="report-title">Report Title:</label>
+                <input type="text" id="report-title" name="report-title" placeholder="Enter report title" required />
+
+                <label for="report-details">Report Details:</label>
+                <textarea id="report-details" name="report-details" placeholder="Provide details of the report" rows="4"
+                    required></textarea>
+
+                <button type="submit">Submit Report</button>
+            </form>
+        </section>
+
+        <!-- Report Status -->
+        <section class="card report-status">
+            <h2>Report Status</h2>
+            <div id="loading-spinner">Loading status...</div>
+            <div id="report-status-list">
+                <!-- Status updates will appear here -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Handle form submission
+        document.getElementById('report-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const reportTitle = document.getElementById('report-title').value.trim();
+            const reportDetails = document.getElementById('report-details').value.trim();
+
+            if (!reportTitle || !reportDetails) {
+                alert('Please fill out both fields!');
+                return;
+            }
+
+            document.getElementById('loading-spinner').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('loading-spinner').style.display = 'none';
+                alert('Report submitted successfully!');
+                document.getElementById('report-form').reset();
+            }, 1200);
+        });
+
+        // Load report statuses on page load
+        window.addEventListener('load', function () {
+            document.getElementById('loading-spinner').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('loading-spinner').style.display = 'none';
+
+                const reportStatuses = [
+                    { title: 'Political Article Claim', status: 'Under Review' },
+                    { title: 'Viral Video Analysis', status: 'Verified' },
+                    { title: 'Misinformation Meme', status: 'Rejected' }
+                ];
+
+                const statusList = document.getElementById('report-status-list');
+                statusList.innerHTML = '';
+
+                reportStatuses.forEach(item => {
+                    const statusDiv = document.createElement('div');
+                    statusDiv.classList.add('status-item');
+                    statusDiv.innerHTML = `
+                        <h3>${item.title}</h3>
+                        <p>Status: <strong>${item.status}</strong></p>
+                    `;
+                    statusList.appendChild(statusDiv);
+                });
+            }, 1200);
+        });
+    </script>
+
+</body>
+
+</html>
